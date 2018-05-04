@@ -38,17 +38,9 @@ class Mastermind
     elsif /[RBGY]/.match?(input)
       @choices.each_with_index do |letter, i|
         # use .count ? maybe
-        if @secret.include?(input[i])
-            color_match += 1
-            # binding.pry  
-          if input[i] == @secret[i]
-            position_match += 1
-            # color_match += 1
-            # binding.pry
-          end
-        else
-          return "You guessed #{color_match} correct colors, with #{position_match} in the correct position."      
-        end
+        color_match = @secret.chars & input.chars
+        color_match = color_match.length
+          return "You guessed #{color_match} correct colors, with #{position_match} in the correct position.  Please guess again:"      
       end
     else
       "Invalid input.  Please use RGBY.  Guess again:"
