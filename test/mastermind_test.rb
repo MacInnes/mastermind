@@ -5,15 +5,21 @@ require "./lib/mastermind"
 # tests below
 
 class MastermindTest < Minitest::Test
+
+  # def make_guess(secret, guess)
+  #   mastermind = Mastermind.new(secret)
+  #   assert_equal(make_guess("AAAA", "BBBBB"), "string")
+  # end
+
   def test_correct_compare
-    skip
+
     mastermind = Mastermind.new('GGGG')
     valid = mastermind.compare('GGGG')
     assert_equal "Congratulations!  You got it in 1 guesses!", valid
   end
 
   def test_invalid_compare
-    skip
+
     mastermind = Mastermind.new
     invalid = mastermind.compare('AAAA')
     assert_equal "Invalid input.  Please use RGBY.  Guess again:", invalid
@@ -24,32 +30,40 @@ class MastermindTest < Minitest::Test
   end
 
   def test_incorrect_compare
+
     mastermind = Mastermind.new('GBGB')
-    # incorrect_all = mastermind.compare('YYYY')
-    # correct_two = mastermind.compare('GBYY')
-    # correct_three = mastermind.compare('GBGY')
-    # correct_two_out_of_place = mastermind.compare('BGYY')
-    # correct_two_2 = mastermind.compare('GBRG')
+    incorrect_all = mastermind.compare('YYYY')
+    correct_two = mastermind.compare('GBYY')
+    correct_three = mastermind.compare('GBGY')
+    correct_two_out_of_place = mastermind.compare('BGYY')
+    correct_two_2 = mastermind.compare('GBRG')
     too_many = mastermind.compare('GGGG')
 
-    # assert_equal "You guessed 0 correct colors, with 0 in the correct position.", incorrect_all
-    # assert_equal "You guessed 2 correct colors, with 2 in the correct position.", correct_two
-    # assert_equal "You guessed 3 correct colors, with 3 in the correct position.", correct_three
-    # assert_equal "You guessed 2 correct colors, with 0 in the correct position.", correct_two_out_of_place
-    # assert_equal "You guessed 2 correct colors, with 2 in the correct position.", correct_two_2
-    assert_equal "You guessed 2 correct colors, with 2 in the correct position.", too_many
+    assert_equal "You guessed 0 correct colors, with 0 in the correct position.  Please guess again:", incorrect_all
+    assert_equal "You guessed 2 correct colors, with 2 in the correct position.  Please guess again:", correct_two
+    assert_equal "You guessed 2 correct colors, with 3 in the correct position.  Please guess again:", correct_three
+    assert_equal "You guessed 2 correct colors, with 0 in the correct position.  Please guess again:", correct_two_out_of_place
+    assert_equal "You guessed 2 correct colors, with 2 in the correct position.  Please guess again:", correct_two_2
+    assert_equal "You guessed 1 correct colors, with 2 in the correct position.  Please guess again:", too_many
 
   end
 
+  def test_incorrect_compare_2
+    mastermind = Mastermind.new('RGGG')
+    one = mastermind.compare('GRRR')
+
+    assert_equal "You guessed 2 correct colors, with 0 in the correct position.  Please guess again:", one
+  end
+
   def test_qc_compare
-    skip
+
     mastermind = Mastermind.new
-    assert_equal "The correct answer was #{mastermind.secret}", mastermind.compare('c')
+    assert_equal "The correct answer is #{mastermind.secret}", mastermind.compare('c')
     # todo:  test for q (how do you test exiting a program???)
   end
 
   def test_short_input_compare
-    skip
+
     mastermind = Mastermind.new
     short = mastermind.compare("grb")
     number = mastermind.compare(1234)
@@ -57,7 +71,7 @@ class MastermindTest < Minitest::Test
   end
 
   def test_long_input_update
-    skip
+
     mastermind = Mastermind.new
     long = mastermind.compare("GRBYG")
 

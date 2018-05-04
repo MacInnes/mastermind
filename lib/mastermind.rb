@@ -14,10 +14,11 @@ class Mastermind
   end
 
   def compare(input)
-    color_match = 0
     position_match = 0
     @count += 1
     input = input.to_s.upcase
+    color_match = (@secret.chars & input.chars).length
+
 
     if input == @secret
       "Congratulations!  You got it in #{@count} guesses!"
@@ -26,7 +27,7 @@ class Mastermind
       # quit the game
 
     elsif input == "C"
-      "The correct answer was #{@secret}"
+      "The correct answer is #{@secret}"
       # endgame
 
     elsif input.length < 4
@@ -36,15 +37,13 @@ class Mastermind
       "Your guess was too long, you need to guess 4 colors.  Please guess again:"
       # loop input
     elsif /[RBGY]/.match?(input)
-      @choices.each_with_index do |letter, i|
-        # use .count ? maybe
-        color_match = @secret.chars & input.chars
-        color_match = color_match.length
-          return "You guessed #{color_match} correct colors, with #{position_match} in the correct position.  Please guess again:"      
-      end
+      # input.chars.each_with_index do |char, i|
+      #   position_match += 1 if char == @secret[i]
+      # end
+      position_match = input.each_char.with_index.count {|char, i| char == @secret[i] }
+      "You guessed #{color_match} correct colors, with #{position_match} in the correct position.  Please guess again:"      
     else
       "Invalid input.  Please use RGBY.  Guess again:"
-      # invalid input
     end
 
   end
