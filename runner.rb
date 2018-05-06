@@ -15,8 +15,7 @@ What's your guess?"
   end
 end 
 
-puts "Welcome to MASTERMIND!/n/nWould you like to (p)lay, read the (i)nstructions, or (q)uit?
->"
+puts "Welcome to MASTERMIND!/n/nWould you like to (p)lay, read the (i)nstructions, or (q)uit? >"
 initial_input = gets.chomp
 
 if initial_input.upcase == "Q" || initial_input.upcase == "QUIT"

@@ -15,6 +15,7 @@ class MastermindTest < Minitest::Test
 
     mastermind = Mastermind.new('GGGG')
     valid = mastermind.compare('GGGG')
+
     assert_equal "Congratulations!  You got it in 1 guesses!", valid
   end
 
@@ -22,9 +23,10 @@ class MastermindTest < Minitest::Test
 
     mastermind = Mastermind.new
     invalid = mastermind.compare('AAAA')
-    assert_equal "Invalid input.  Please use RGBY.  Guess again:", invalid
     number = mastermind.compare(1234)
     number_string = mastermind.compare("1234")
+    
+    assert_equal "Invalid input.  Please use RGBY.  Guess again:", invalid
     assert_equal "Invalid input.  Please use RGBY.  Guess again:", number
     assert_equal "Invalid input.  Please use RGBY.  Guess again:", number_string
   end
@@ -58,6 +60,7 @@ class MastermindTest < Minitest::Test
   def test_qc_compare
 
     mastermind = Mastermind.new
+
     assert_equal "The correct answer is #{mastermind.secret}", mastermind.compare('c')
     # todo:  test for q (how do you test exiting a program???)
   end
@@ -66,14 +69,23 @@ class MastermindTest < Minitest::Test
 
     mastermind = Mastermind.new
     short = mastermind.compare("grb")
-    number = mastermind.compare(1234)
+
     assert_equal "Your guess was too short, you need to guess 4 colors.  Please guess again:", short
   end
 
-  def test_long_input_update
+  def test_long_input_compare
 
     mastermind = Mastermind.new
     long = mastermind.compare("GRBYG")
 
+    assert_equal "Your guess was too long, you need to guess 4 colors.  Please guess again:", long
+
   end
+
+  def test_nil_input
+    mastermind = Mastermind.new
+    assert_equal "Your guess was too short, you need to guess 4 colors.  Please guess again:", mastermind.compare(nil)
+  end
+
+
 end

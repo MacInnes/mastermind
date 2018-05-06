@@ -19,7 +19,8 @@ class Mastermind
     input = input.to_s.upcase
     color_match = (@secret.chars & input.chars).length
 
-
+    # refactor this into:  return_value if condition
+    
     if input == @secret
       "Congratulations!  You got it in #{@count} guesses!"
       # endgame
