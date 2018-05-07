@@ -37,13 +37,6 @@ class Mastermind
     end
   end
 
-  # def with_timing(&block)
-  #   start = Time.new
-  #   output = block.call
-  #   end_time = Time.new
-  #   return output + "You got it in #{end_time - start_time} seconds"
-  # end
-
   def compare(input)
 
     position_match = 0
@@ -52,18 +45,12 @@ class Mastermind
     input = input.to_s.upcase
     temp = @secret.clone
 
-    # refactor this into:  return_value if condition
-
     if input == @secret
       @count += 1
       format_win(@start_time)
-      # endgame
-    elsif input == "Q"
-      # quit the game
 
     elsif input == "C"
       "The correct answer is #{@secret}"
-      # endgame
 
     elsif input.length < @num
       "Your guess was too short, you need to guess #{@num} elements.  Please guess again:"

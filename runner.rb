@@ -1,20 +1,15 @@
 require './lib/mastermind'
-# user interaction goes here
 
 def initial
   puts "Welcome to MASTERMIND!\n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit? >"
   initial_input = gets.chomp.upcase
-
   if initial_input == "Q" || initial_input == "QUIT"
     puts "Pssh fine, why even open the game just to quit?  Whatever."
     return
-
   elsif initial_input == "I" || initial_input == "INSTRUCTIONS"
-    # instructions
     puts "You have to guess a random sequence containing only (r)ed, (g)reen, (b)lue, and (y)ellow.\nYou'll get feedback about how many correct elements you've guessed, and how many are in the correct position."
     initial
   elsif initial_input == "P" || initial_input == "PLAY"
-    # play the game
     game_flow
   end
 end
