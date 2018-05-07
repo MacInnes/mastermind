@@ -1,7 +1,23 @@
 require './lib/mastermind'
 # user interaction goes here
 
+def initial
+  puts "Welcome to MASTERMIND!\n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit? >"
+  initial_input = gets.chomp.upcase
 
+  if initial_input == "Q" || initial_input == "QUIT"
+    puts "Pssh fine, why even open the game just to quit?  Whatever."
+    return
+
+  elsif initial_input == "I" || initial_input == "INSTRUCTIONS"
+    # instructions
+    puts "You have to guess a random sequence containing only (r)ed,
+  (g)reen, (b)lue, and (y)ellow.  You'll get feedback about how many correct elements you've guessed, and how many are in the correct position."
+  elsif initial_input == "P" || initial_input == "PLAY"
+    # play the game
+    game_flow
+  end
+end
 
 def game_flow
   mastermind = Mastermind.new
@@ -9,24 +25,26 @@ def game_flow
 (g)reen, (b)lue, and (y)ellow. Use (q)uit at any time to end the game.
 What's your guess?"
   loop do 
-    answer_input = gets.chomp
+    answer_input = gets.chomp.upcase
     puts mastermind.compare(answer_input)
-
+    if answer_input == "Q"
+      puts "Thanks for playing!"
+      break
+    elsif answer_input == mastermind.secret
+      puts "\n\nDo you want to (p)lay again or (q)uit?"
+      endgame_input = gets.chomp.upcase
+      if endgame_input == "Q"
+        puts "Thanks for playing!"
+        break
+      elsif endgame_input == "P"
+        puts "Great! starting a new game now."
+        initial
+      end
+    end
   end
 end 
 
-puts "Welcome to MASTERMIND!/n/nWould you like to (p)lay, read the (i)nstructions, or (q)uit? >"
-initial_input = gets.chomp
+initial
 
-if initial_input.upcase == "Q" || initial_input.upcase == "QUIT"
-  puts "Pssh fine, you're not even good at this game.  Why open the game just to quit?  Whatever."
-  # this duplicates the logic in mastermind.rb, fix one or the other
 
-elsif initial_input.upcase == "I" || initial_input.upcase == "INSTRUCTIONS"
-  # instructions
-  puts "Instructions"
-elsif initial_input.upcase == "P" || initial_input.upcase == "PLAY"
-  # play the game
-  game_flow
-end
 

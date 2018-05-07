@@ -41,12 +41,12 @@ class MastermindTest < Minitest::Test
     correct_two_2 = mastermind.compare('GBRG')
     too_many = mastermind.compare('GGGG')
 
-    assert_equal "You guessed 0 correct colors, with 0 in the correct position.  Please guess again:", incorrect_all
-    assert_equal "You guessed 2 correct colors, with 2 in the correct position.  Please guess again:", correct_two
-    assert_equal "You guessed 2 correct colors, with 3 in the correct position.  Please guess again:", correct_three
-    assert_equal "You guessed 2 correct colors, with 0 in the correct position.  Please guess again:", correct_two_out_of_place
-    assert_equal "You guessed 2 correct colors, with 2 in the correct position.  Please guess again:", correct_two_2
-    assert_equal "You guessed 1 correct colors, with 2 in the correct position.  Please guess again:", too_many
+    assert_equal "You guessed 0 correct elements, with 0 in the correct position.  Please guess again:", incorrect_all
+    assert_equal "You guessed 2 correct elements, with 2 in the correct position.  Please guess again:", correct_two
+    assert_equal "You guessed 3 correct elements, with 3 in the correct position.  Please guess again:", correct_three
+    assert_equal "You guessed 2 correct elements, with 0 in the correct position.  Please guess again:", correct_two_out_of_place
+    assert_equal "You guessed 3 correct elements, with 2 in the correct position.  Please guess again:", correct_two_2
+    assert_equal "You guessed 2 correct elements, with 2 in the correct position.  Please guess again:", too_many
 
   end
 
@@ -54,7 +54,7 @@ class MastermindTest < Minitest::Test
     mastermind = Mastermind.new('RGGG')
     one = mastermind.compare('GRRR')
 
-    assert_equal "You guessed 2 correct colors, with 0 in the correct position.  Please guess again:", one
+    assert_equal "You guessed 2 correct elements, with 0 in the correct position.  Please guess again:", one
   end
 
   def test_qc_compare
@@ -70,7 +70,7 @@ class MastermindTest < Minitest::Test
     mastermind = Mastermind.new
     short = mastermind.compare("grb")
 
-    assert_equal "Your guess was too short, you need to guess 4 colors.  Please guess again:", short
+    assert_equal "Your guess was too short, you need to guess 4 elements.  Please guess again:", short
   end
 
   def test_long_input_compare
@@ -78,13 +78,13 @@ class MastermindTest < Minitest::Test
     mastermind = Mastermind.new
     long = mastermind.compare("GRBYG")
 
-    assert_equal "Your guess was too long, you need to guess 4 colors.  Please guess again:", long
+    assert_equal "Your guess was too long, you need to guess 4 elements.  Please guess again:", long
 
   end
 
   def test_nil_input
     mastermind = Mastermind.new
-    assert_equal "Your guess was too short, you need to guess 4 colors.  Please guess again:", mastermind.compare(nil)
+    assert_equal "Your guess was too short, you need to guess 4 elements.  Please guess again:", mastermind.compare(nil)
   end
 
 

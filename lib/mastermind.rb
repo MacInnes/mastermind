@@ -2,27 +2,58 @@
 require 'pry'
 
 class Mastermind
-  attr_reader :secret
-  def initialize(secret=nil)
+  attr_reader :secret,
+              :start_time,
+              :end_time
+  def initialize(secret=nil, num=4)
+    @num = num
     @choices = ["R", "G", "B", "Y"]
-    @secret = secret || random_secret
+    @secret = secret || random_secret(num)
     @count = 0
+    @start_time = Time.new
+    @end_time = 0
+    
   end
 
-  def random_secret
-    4.times.map { @choices.sample }.join
+  def random_secret(num)
+    num.times.map { @choices.sample }.join
   end
+
+  def format_win(time)
+    @end_time = Time.new
+    total_time = @end_time - time
+    hours = (total_time / 60 / 60).to_i
+    minutes = (total_time / 60).to_i
+    seconds = (total_time - (minutes * 60) - (hours * 60 * 60)).to_i
+    output = ""
+    if hours > 0
+      output = "Congratulations!  You got it in #{@count} guesses over #{hours} hours, #{minutes} minutes, and #{seconds} seconds."
+    elsif minutes > 0
+      output = "Congratulations!  You got it in #{@count} guesses over #{minutes} minutes, and #{seconds} seconds."
+    else
+      output = "Congratulations!  You got it in #{@count} guesses over #{seconds} seconds."
+    end
+  end
+
+  # def with_timing(&block)
+  #   start = Time.new
+  #   output = block.call
+  #   end_time = Time.new
+  #   return output + "You got it in #{end_time - start_time} seconds"
+  # end
 
   def compare(input)
+    with_timing do
     position_match = 0
-    @count += 1
+    element_match = 0
+    
     input = input.to_s.upcase
-    color_match = (@secret.chars & input.chars).length
+    temp = @secret.clone
 
     # refactor this into:  return_value if condition
-    
+
     if input == @secret
-      "Congratulations!  You got it in #{@count} guesses!"
+      format_win(start_time)
       # endgame
     elsif input == "Q"
       # quit the game
@@ -31,21 +62,27 @@ class Mastermind
       "The correct answer is #{@secret}"
       # endgame
 
-    elsif input.length < 4
-      "Your guess was too short, you need to guess 4 colors.  Please guess again:"
-      # loop input
-    elsif input.length > 4
-      "Your guess was too long, you need to guess 4 colors.  Please guess again:"
-      # loop input
-    elsif /[RBGY]/.match?(input)
-      # input.chars.each_with_index do |char, i|
-      #   position_match += 1 if char == @secret[i]
-      # end
+    elsif input.length < @num
+      "Your guess was too short, you need to guess #{@num} elements.  Please guess again:"
+
+    elsif input.length > @num
+      "Your guess was too long, you need to guess #{@num} elements.  Please guess again:"
+
+    elsif /^[RBGY]+$/.match?(input)
+      @count += 1
       position_match = input.each_char.with_index.count {|char, i| char == @secret[i] }
-      "You guessed #{color_match} correct colors, with #{position_match} in the correct position.  Please guess again:"      
+      input.chars.each do |each|
+        if temp.include? each
+          i = temp.index each
+          temp[i] = ""
+          element_match += 1
+        end
+      end
+      "You guessed #{element_match} correct elements, with #{position_match} in the correct position.  Please guess again:"      
     else
       "Invalid input.  Please use RGBY.  Guess again:"
     end
+  end
 
   end
 end
