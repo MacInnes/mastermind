@@ -11,8 +11,8 @@ def initial
 
   elsif initial_input == "I" || initial_input == "INSTRUCTIONS"
     # instructions
-    puts "You have to guess a random sequence containing only (r)ed,
-  (g)reen, (b)lue, and (y)ellow.  You'll get feedback about how many correct elements you've guessed, and how many are in the correct position."
+    puts "You have to guess a random sequence containing only (r)ed, (g)reen, (b)lue, and (y)ellow.\nYou'll get feedback about how many correct elements you've guessed, and how many are in the correct position."
+    initial
   elsif initial_input == "P" || initial_input == "PLAY"
     # play the game
     game_flow
@@ -29,7 +29,7 @@ What's your guess?"
     puts mastermind.compare(answer_input)
     if answer_input == "Q"
       puts "Thanks for playing!"
-      break
+      return
     elsif answer_input == mastermind.secret
       puts "\n\nDo you want to (p)lay again or (q)uit?"
       endgame_input = gets.chomp.upcase

@@ -2,14 +2,9 @@ require "minitest/autorun"
 require "minitest/pride"
 require "./lib/mastermind"
 
-# tests below
+# tests below do not work after Time has been added to the output of Mastermind compare function, but did pass beforehand
 
 class MastermindTest < Minitest::Test
-
-  # def make_guess(secret, guess)
-  #   mastermind = Mastermind.new(secret)
-  #   assert_equal(make_guess("AAAA", "BBBBB"), "string")
-  # end
 
   def test_correct_compare
 
@@ -57,12 +52,11 @@ class MastermindTest < Minitest::Test
     assert_equal "You guessed 2 correct elements, with 0 in the correct position.  Please guess again:", one
   end
 
-  def test_qc_compare
+  def test_c_compare
 
     mastermind = Mastermind.new
 
     assert_equal "The correct answer is #{mastermind.secret}", mastermind.compare('c')
-    # todo:  test for q (how do you test exiting a program???)
   end
 
   def test_short_input_compare

@@ -2,18 +2,20 @@
 require 'pry'
 
 class Mastermind
-  attr_reader :secret,
-              :start_time,
-              :end_time
+  attr_reader :secret
+
   def initialize(secret=nil, num=4)
     @num = num
     @choices = ["R", "G", "B", "Y"]
+
     @secret = secret || random_secret(num)
     @count = 0
     @start_time = Time.new
     @end_time = 0
     
   end
+
+
 
   def random_secret(num)
     num.times.map { @choices.sample }.join
@@ -43,7 +45,7 @@ class Mastermind
   # end
 
   def compare(input)
-    with_timing do
+
     position_match = 0
     element_match = 0
     
@@ -53,7 +55,8 @@ class Mastermind
     # refactor this into:  return_value if condition
 
     if input == @secret
-      format_win(start_time)
+      @count += 1
+      format_win(@start_time)
       # endgame
     elsif input == "Q"
       # quit the game
@@ -82,7 +85,5 @@ class Mastermind
     else
       "Invalid input.  Please use RGBY.  Guess again:"
     end
-  end
-
   end
 end
